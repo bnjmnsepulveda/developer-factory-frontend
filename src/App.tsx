@@ -1,13 +1,17 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import EntityForm from './infraestructure/presentation/maintainer/EntityForm';
+import EntityForm from './infraestructure/presentation/pages/maintainer/components/EntityForm';
+import { Container } from '@mui/material';
+import { Title } from './infraestructure/presentation/shared/components/Title';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Developer roadmap app</h1>
+    <div>
+      <Container maxWidth="md">
+      <Title title="Developer roadmap app" ></Title>
       <EntityForm />
+      </Container>
     </div>
   );
 }
