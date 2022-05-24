@@ -22,6 +22,8 @@ import CategoryIcon from '@mui/icons-material/Category';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import { RelationshipForm } from '../../pages/neo4j-maintainer/components/RelationshipForm';
 import EntityForm from '../../pages/neo4j-maintainer/components/EntityForm';
+import { useUiState } from '../../../state/hooks/useUiState';
+import { Container } from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -81,8 +83,20 @@ export default function PersistentDrawer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [content, setContent] = React.useState('create-node');
+  const { dashboardTitle, setDashboardTitle } = useUiState()
 
   const showContent = (content: string) => (e: any) => {
+    if (content === 'create-node') {
+      setDashboardTitle('Crear entidad Neo4j')
+    } else if (content === 'create-relationship') {
+      setDashboardTitle('Crear relación Neo4j')
+    } else if (content === 'show-roadmap') {
+      setDashboardTitle('Roadmap')
+    } else if (content === 'show-config') {
+      setDashboardTitle('Configuración')
+    } else {
+      setDashboardTitle('Developer factory')
+    }
     setContent(content)
   }
 
@@ -117,7 +131,7 @@ export default function PersistentDrawer() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Developer Factory
+            {dashboardTitle}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -180,10 +194,12 @@ export default function PersistentDrawer() {
       </Drawer>
       <Main open={open}>
         <DrawerHeader />
-        <Typography paragraph>
+        <Container maxWidth="md">
           {contentSwitch[content]}
-        </Typography>
+        </Container>
       </Main>
     </Box>
   );
 }
+
+

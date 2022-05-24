@@ -8,11 +8,7 @@ import AcceptCancelButtons from './AcceptCancelButtons';
 import { Container, Grid } from '@mui/material';
 
 export default function StateTextFields() {
-  const [name, setName] = React.useState('Cat in the Hat');
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
-
+  
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
