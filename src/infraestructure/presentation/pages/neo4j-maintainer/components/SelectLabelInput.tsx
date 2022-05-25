@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import FormControl from '@mui/material/FormControl';
 import Chip from '@mui/material/Chip';
 import { getLabels } from '../../../../../core/domain/service/getLabels';
