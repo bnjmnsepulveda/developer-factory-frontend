@@ -21,7 +21,7 @@ import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import CategoryIcon from '@mui/icons-material/Category';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import { RelationshipForm } from '../../pages/neo4j-maintainer/components/RelationshipForm';
-import EntityForm from '../../pages/neo4j-maintainer/components/EntityForm';
+import EntityForm from '../../pages/neo4j-maintainer/components/Neo4jNodeForm';
 import { useUiState } from '../../../state/hooks/useUiState';
 import { Container } from '@mui/material';
 
@@ -182,7 +182,7 @@ export default function PersistentDrawer() {
         </List>
         <Divider />
         <List>
-          <ListItem key={'config'} disablePadding>
+          <ListItem key={'config'} disablePadding onClick={showContent('show-config')}>
             <ListItemButton>
               <ListItemIcon>
                 <SettingsIcon />
