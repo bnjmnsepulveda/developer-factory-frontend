@@ -33,7 +33,8 @@ export default function Neo4jNodeForm() {
       const data = {
         node,
         nodeName,
-        nodeLabels
+        nodeLabels, 
+        nodeProperties
       }
       console.log('Save node', data)
     }

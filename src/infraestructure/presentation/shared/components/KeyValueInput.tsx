@@ -21,6 +21,7 @@ export function KeyValueInput({ onAddKeyValue }: Props) {
     const handleOnAdd = (e: any) => {
         onAddKeyValue(state)
         setState(defaultState)
+        setButtonDisabled(true)
     }
 
     const enableButtonAdd = (key: any, value: any) => {
