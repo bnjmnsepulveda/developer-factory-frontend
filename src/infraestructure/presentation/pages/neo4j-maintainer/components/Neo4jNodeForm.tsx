@@ -9,7 +9,6 @@ import { useNeo4jFormState } from '../../../../state/hooks/useNeo4jFormState';
 import { KeyValueInput } from '../../../shared/components/KeyValueInput';
 import KeyValuePreview from '../../../shared/components/KeyValuePreview';
 import { KeyValueData } from '../dto/key-value-data.dto';
-import { NodeProperties } from '../../../../state/ducks/neo4j-form.duck';
 
 export default function Neo4jNodeForm() {
 

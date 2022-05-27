@@ -11,10 +11,8 @@ export default function NameEntityInput(props: CustomInputProps<string>) {
   const [error, setError] = useState({ error: false })
 
   const handleOnChange = (event: any) => {
-
     onChange(event.target.value)
     setError({ error: (event.target.value === '')})
-   
   }
 
   return (

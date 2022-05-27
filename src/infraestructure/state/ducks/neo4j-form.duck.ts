@@ -33,8 +33,9 @@ export const neo4jForm = createSlice({
       state.nodeLabels = action.payload
     },
     addNodeProperties: (state, action: PayloadAction<NodeProperties>) => {
+      const properties = state.properties.filter(p => p.key !== action.payload.key)
       state.properties = [
-        ...state.properties,
+        ...properties,
         action.payload
       ]
     }
