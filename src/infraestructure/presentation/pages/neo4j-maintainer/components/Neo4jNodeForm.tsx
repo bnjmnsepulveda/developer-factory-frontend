@@ -6,10 +6,14 @@ import NameEntityInput from './NameEntityInput';
 import SelectLabelInput from './SelectLabelInput';
 import SaveAndCancelButtons from '../../../shared/components/SaveAndCancelButtons';
 import { useNeo4jFormState } from '../../../../state/hooks/useNeo4jFormState';
+import { KeyValueInput } from '../../../shared/components/KeyValueInput';
+import KeyValuePreview from '../../../shared/components/KeyValuePreview';
+import { KeyValueData } from '../dto/key-value-data.dto';
+import { NodeProperties } from '../../../../state/ducks/neo4j-form.duck';
 
 export default function Neo4jNodeForm() {
 
-  const { node, nodeName, nodeLabels, setNode, setNodeName, setNodeLabels } = useNeo4jFormState()
+  const { node, nodeName, nodeLabels, nodeProperties, setNode, setNodeName, setNodeLabels, addNodeProperties } = useNeo4jFormState()
   const [formValid, setFormValid] = useState(false)
 
   const handleOnNameChange = (name: string) => {
@@ -18,6 +22,10 @@ export default function Neo4jNodeForm() {
 
   const handleOnLabelsChange = (values: string[]) => {
     setNodeLabels(values)
+  }
+
+  const handleOnKeyValueAdded = (keyValueData: KeyValueData) => {
+    addNodeProperties(keyValueData)
   }
 
   const handleOnSave = () => {
@@ -45,14 +53,20 @@ export default function Neo4jNodeForm() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <SelectNodeInput value={node} onChange={setNode} />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <NameEntityInput value={nodeName} onChange={handleOnNameChange} />
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={12}>
           <SelectLabelInput value={nodeLabels} onChange={handleOnLabelsChange} />
+        </Grid>
+        <Grid item xs={12}>
+          <KeyValueInput onAddKeyValue={handleOnKeyValueAdded} />
+        </Grid>
+        <Grid item xs={12} >
+          <KeyValuePreview  keyValueData={nodeProperties} />
         </Grid>
         <Grid item xs={8}>
           <SaveAndCancelButtons disabled={!formValid} onSave={handleOnSave} onCancel={handleOnCancel} />
