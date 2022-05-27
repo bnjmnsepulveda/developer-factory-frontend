@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import { getNodeTypes } from '../../../../../core/domain/service/getNodeTypes';
@@ -14,15 +14,21 @@ const filter = createFilterOptions<NodeOptionType>();
 export default function SelectNodeInput(props: CustomInputProps<string>) {
 
   const { value, onChange } = props;
+  const [error, setError] = useState({ error: false })
+
+  const validate = (value: string) => {
+    setError({ error: (value === '')})
+    onChange(value)
+  }
 
   const handleOnChange = (event: any, newValue: any) => {
     if (typeof newValue === 'string') {
-      onChange(newValue);
+      validate(newValue);
     } else if (newValue && newValue.inputValue) {
       // Create a new value from the user input
-      onChange(newValue.inputValue);
+      validate(newValue.inputValue);
     } else if (newValue) {
-      onChange(newValue.title);
+      validate(newValue.title);
     }
   }
 
@@ -69,7 +75,7 @@ export default function SelectNodeInput(props: CustomInputProps<string>) {
       renderOption={(props, option) => <li {...props}>{option.title}</li>}
       freeSolo
       renderInput={(params) => (
-        <TextField {...params} label="Nodo" />
+        <TextField error={error.error} {...params} label="Nodo" />
       )}
     />
   );

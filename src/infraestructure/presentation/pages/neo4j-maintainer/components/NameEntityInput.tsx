@@ -7,16 +7,22 @@ import { CustomInputProps } from '../../../shared/utils/CustomInputProps';
 
 export default function NameEntityInput(props: CustomInputProps<string>) {
  
-  const { value, onChange } = props;
+  const { value, onChange, ...rest } = props;
+  const [error, setError] = useState({ error: false })
 
   const handleOnChange = (event: any) => {
+
     onChange(event.target.value)
+    setError({ error: (event.target.value === '')})
+   
   }
 
   return (
     <FormControl fullWidth>
         <TextField
           id="outlined-name"
+          error={error.error}
+          {...rest}
           label="Nombre"
           value={value}
           placeholder="Ingrese el nombre del nodo"

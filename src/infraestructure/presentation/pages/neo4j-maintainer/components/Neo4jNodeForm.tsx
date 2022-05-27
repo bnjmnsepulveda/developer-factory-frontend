@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import { Grid } from '@mui/material';
 import SelectNodeInput from './SelectNodeInput';
 import NameEntityInput from './NameEntityInput';
 import SelectLabelInput from './SelectLabelInput';
-import AcceptCancelButtons from './AcceptCancelButtons';
+import SaveAndCancelButtons from '../../../shared/components/SaveAndCancelButtons';
 import { useNeo4jFormState } from '../../../../state/hooks/useNeo4jFormState';
 
 export default function Neo4jNodeForm() {
-  
-  const { node,nodeName, nodeLabels, setNode, setNodeName, setNodeLabels } = useNeo4jFormState()
+
+  const { node, nodeName, nodeLabels, setNode, setNodeName, setNodeLabels } = useNeo4jFormState()
+  const [formValid, setFormValid] = useState(false)
 
   const handleOnNameChange = (name: string) => {
     setNodeName(name)
@@ -18,6 +19,27 @@ export default function Neo4jNodeForm() {
   const handleOnLabelsChange = (values: string[]) => {
     setNodeLabels(values)
   }
+
+  const handleOnSave = () => {
+    if (formValid) {
+      const data = {
+        node,
+        nodeName,
+        nodeLabels
+      }
+      console.log('Save node', data)
+    }
+  }
+
+  const handleOnCancel = () => {
+    setNode('')
+    setNodeName('')
+    setNodeLabels([])
+  }
+
+  useEffect(() => {
+    setFormValid(![node, nodeName].some(x => x === ''))
+  }, [node, nodeName, nodeLabels])
 
 
   return (
@@ -33,7 +55,7 @@ export default function Neo4jNodeForm() {
           <SelectLabelInput value={nodeLabels} onChange={handleOnLabelsChange} />
         </Grid>
         <Grid item xs={8}>
-          <AcceptCancelButtons/>
+          <SaveAndCancelButtons disabled={!formValid} onSave={handleOnSave} onCancel={handleOnCancel} />
         </Grid>
       </Grid>
     </Box>

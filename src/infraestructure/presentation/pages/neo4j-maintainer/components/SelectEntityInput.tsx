@@ -3,29 +3,33 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { getLabels } from '../../../../../core/domain/service/getLabels';
+import { CustomInputProps } from '../../../shared/utils/CustomInputProps';
+import { NodeNameOptionsDTO } from '../../../../../core/application/dto/NodeNameOptionsDTO';
 
-export default function SelectEntityInput() {
-  const [age, setAge] = React.useState('');
+interface SelectEntityInputProps extends  CustomInputProps<string>{
+  title?: string;
+  options: NodeNameOptionsDTO [];
+}
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
-  };
+export default function SelectEntityInput(props: SelectEntityInputProps) {
+
+  const { value, onChange, options, title} = props;
+
+  const handleOnChange = (event: SelectChangeEvent) => {
+    onChange(event.target.value)
+  }
 
   return (
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Seleccionar Nodo</InputLabel>
+        <InputLabel id="select-node">{title}</InputLabel>
         <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
+          labelId="select-node"
+          id="node-select"
+          value={value}
           label="Entidad"
-          onChange={handleChange}
+          onChange={handleOnChange}
         >
-          <MenuItem value={10}>Nestjs</MenuItem>
-          <MenuItem value={20}>Java</MenuItem>
-          <MenuItem value={30}>Python</MenuItem>
-          <MenuItem value={4}>Linux</MenuItem>
+          { options.map(o => <MenuItem key={o.id} value={o.id}>{o.name}</MenuItem>)}
         </Select>
       </FormControl>
   );
