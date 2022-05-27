@@ -1,15 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+export interface NodeProperties {
+  key: string;
+  value: string;
+}
+
 export interface Neo4jFormState {
   node: string;
   nodeName: string;
   nodeLabels: string[];
+  properties: NodeProperties[];
 }
 
 const initialState: Neo4jFormState = {
     node: '',
     nodeName: '',
-    nodeLabels: []
+    nodeLabels: [],
+    properties: []
 }
 
 export const neo4jForm = createSlice({
@@ -24,11 +31,17 @@ export const neo4jForm = createSlice({
     },
     setNodeLabels: (state, action: PayloadAction<string[]>) => {
       state.nodeLabels = action.payload
+    },
+    addNodeProperties: (state, action: PayloadAction<NodeProperties>) => {
+      state.properties = [
+        ...state.properties,
+        action.payload
+      ]
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setNodeName, setNodeLabels, setNode } = neo4jForm.actions
+export const { setNodeName, setNodeLabels, setNode, addNodeProperties } = neo4jForm.actions
 
 export default neo4jForm.reducer
