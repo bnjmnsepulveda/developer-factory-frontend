@@ -37,7 +37,7 @@ export default function Neo4jNodeForm() {
         nodeProperties
       }
       const response = createNeo4jNode(data)
-      console.log('Save node', data)
+      console.log('Save node', response)
     }
   }
 
