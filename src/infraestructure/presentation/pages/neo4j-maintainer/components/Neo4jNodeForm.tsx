@@ -9,6 +9,7 @@ import { useNeo4jFormState } from '../../../../state/hooks/useNeo4jFormState';
 import { KeyValueInput } from '../../../shared/components/KeyValueInput';
 import KeyValuePreview from '../../../shared/components/KeyValuePreview';
 import { KeyValueData } from '../dto/key-value-data.dto';
+import { createNeo4jNode } from '../../../../../core/application/service/createNeo4jNode';
 
 export default function Neo4jNodeForm() {
 
@@ -35,6 +36,7 @@ export default function Neo4jNodeForm() {
         nodeLabels, 
         nodeProperties
       }
+      const response = createNeo4jNode(data)
       console.log('Save node', data)
     }
   }
