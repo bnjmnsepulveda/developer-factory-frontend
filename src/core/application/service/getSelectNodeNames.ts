@@ -1,4 +1,4 @@
-import { getAllNeo4jNodes } from "../../domain/service/getNeo4jNodes";
+import { getAllNeo4jNodes } from "./getNeo4jNodes";
 
 export function getSelectNodeNames() {
     return getAllNeo4jNodes().map(n => ({

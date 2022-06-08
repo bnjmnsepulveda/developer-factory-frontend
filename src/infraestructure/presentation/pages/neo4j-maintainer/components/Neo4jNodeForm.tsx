@@ -10,10 +10,11 @@ import { KeyValueInput } from '../../../shared/components/KeyValueInput';
 import KeyValuePreview from '../../../shared/components/KeyValuePreview';
 import { KeyValueData } from '../dto/key-value-data.dto';
 import { createNeo4jNode } from '../../../../../core/application/service/createNeo4jNode';
+import swal from 'sweetalert';
 
 export default function Neo4jNodeForm() {
 
-  const { node, nodeName, nodeLabels, nodeProperties, setNode, setNodeName, setNodeLabels, addNodeProperties } = useNeo4jFormState()
+  const { node, nodeName, nodeLabels, nodeProperties, setNode, setNodeName, setNodeLabels, addNodeProperties, resetNodeProperties } = useNeo4jFormState()
   const [formValid, setFormValid] = useState(false)
 
   const handleOnNameChange = (name: string) => {
@@ -28,28 +29,41 @@ export default function Neo4jNodeForm() {
     addNodeProperties(keyValueData)
   }
 
-  const handleOnSave = () => {
+  const handleOnSave = async () => {
+    
     if (formValid) {
-      const data = {
+
+      await createNeo4jNode({
         node,
-        nodeName,
-        nodeLabels, 
-        nodeProperties
-      }
-      const response = createNeo4jNode(data)
-      console.log('Save node', response)
+        name: nodeName,
+        labels: nodeLabels,
+      })
+        .then(() => swal(`Información`, `Nodo Neo4j ${nodeName} Guardado!`, "success"))
+        .finally(() => handleOnCancel())
+
     }
   }
 
   const handleOnCancel = () => {
+    interface Dict<T> {
+      [key: string]: T;
+    }
+    console.log('properties', nodeProperties)
+
+    let dic: Dict<string> = {
+      
+    }
+
     setNode('')
     setNodeName('')
     setNodeLabels([])
+    resetNodeProperties()
   }
 
   useEffect(() => {
     setFormValid(![node, nodeName].some(x => x === ''))
   }, [node, nodeName, nodeLabels])
+
 
 
   return (
@@ -64,12 +78,12 @@ export default function Neo4jNodeForm() {
         <Grid item xs={12}>
           <SelectLabelInput value={nodeLabels} onChange={handleOnLabelsChange} />
         </Grid>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <KeyValueInput onAddKeyValue={handleOnKeyValueAdded} />
         </Grid>
         <Grid item xs={12} >
-          <KeyValuePreview  keyValueData={nodeProperties} />
-        </Grid>
+          <KeyValuePreview keyValueData={nodeProperties} />
+        </Grid> */}
         <Grid item xs={8}>
           <SaveAndCancelButtons disabled={!formValid} onSave={handleOnSave} onCancel={handleOnCancel} />
         </Grid>

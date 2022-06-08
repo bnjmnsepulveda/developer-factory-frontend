@@ -1,6 +1,6 @@
 import { RootState } from "../store";
 import { useDispatch, useSelector } from 'react-redux';
-import { NodeProperties, setNode, setNodeLabels, setNodeName, addNodeProperties } from "../ducks/neo4j-form.duck";
+import { NodeProperties, setNode, setNodeLabels, setNodeName, addNodeProperties, resetNodeProperties } from "../ducks/neo4j-form.duck";
 
 export function useNeo4jFormState() {
     
@@ -15,6 +15,7 @@ export function useNeo4jFormState() {
         setNode: (payload: string) => dispatch(setNode(payload)),
         setNodeName: (payload: string) => dispatch(setNodeName(payload)),
         setNodeLabels: (payload: string[]) => dispatch(setNodeLabels(payload)),
-        addNodeProperties: (payload: NodeProperties) => dispatch(addNodeProperties(payload))
+        addNodeProperties: (payload: NodeProperties) => dispatch(addNodeProperties(payload)),
+        resetNodeProperties: () => dispatch(resetNodeProperties())
     }
 }

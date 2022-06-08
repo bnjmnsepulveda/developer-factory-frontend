@@ -4,7 +4,7 @@ import { CreateNeo4jNodeDTO } from "../dto/CreateNeo4jNodeDTO";
 export async function createNeo4jNode(neo4jNode: CreateNeo4jNodeDTO) {
     let response = null
     try {
-        response = await Neo4jMaintainerService.request(neo4jNode)
+        response = await Neo4jMaintainerService.createNode(neo4jNode)
     } catch (error) {
         return null
     }

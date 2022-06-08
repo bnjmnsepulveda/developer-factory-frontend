@@ -1,14 +1,16 @@
 import React from 'react';
 import FormControl from '@mui/material/FormControl';
 import Chip from '@mui/material/Chip';
-import { getLabels } from '../../../../../core/domain/service/getLabels';
 import { Autocomplete, TextField } from '@mui/material';
 import { CustomInputProps } from '../../../shared/utils/CustomInputProps';
+import { useLabels } from '../hooks/useLabels';
 
 
 export default function SelectLabelInput(props: CustomInputProps<string[]>) {
   
  const { value, onChange} = props;
+
+ const { labels } = useLabels()
 
   return (
     <div>
@@ -17,7 +19,7 @@ export default function SelectLabelInput(props: CustomInputProps<string[]>) {
         multiple
         id="autocomplete-labels"
         value={value}
-        options={getLabels().map((option) => option)}
+        options={labels.map((option) => option)}
         onChange={(event: any, newValues: string[]) => {
           onChange(newValues)
         }}

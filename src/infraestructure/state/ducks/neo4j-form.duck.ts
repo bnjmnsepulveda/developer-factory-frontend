@@ -38,11 +38,14 @@ export const neo4jForm = createSlice({
         ...properties,
         action.payload
       ]
+    },
+    resetNodeProperties: (state) => {
+      state.properties = []
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setNodeName, setNodeLabels, setNode, addNodeProperties } = neo4jForm.actions
+export const { setNodeName, setNodeLabels, setNode, addNodeProperties, resetNodeProperties } = neo4jForm.actions
 
 export default neo4jForm.reducer

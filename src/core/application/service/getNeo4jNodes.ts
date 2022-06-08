@@ -1,4 +1,4 @@
-import { Neo4jNode } from "../model/Neo4jNode";
+import { Neo4jNode } from "../../domain/model/Neo4jNode";
 
 export function getAllNeo4jNodes():  Neo4jNode[]{
     return [
