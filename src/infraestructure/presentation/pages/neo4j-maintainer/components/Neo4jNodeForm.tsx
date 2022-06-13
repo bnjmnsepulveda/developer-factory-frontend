@@ -5,7 +5,7 @@ import SelectNodeInput from './SelectNodeInput';
 import NameEntityInput from './NameEntityInput';
 import SelectLabelInput from './SelectLabelInput';
 import SaveAndCancelButtons from '../../../shared/components/SaveAndCancelButtons';
-import { useNeo4jNodeFormState } from '../../../../state/hooks/useNeo4jFormState';
+import { useNeo4jNodeFormState } from '../../../../state/hooks/useNeo4jNodeFormState';
 import { KeyValueInput } from '../../../shared/components/KeyValueInput';
 import KeyValuePreview from '../../../shared/components/KeyValuePreview';
 import { KeyValueData } from '../dto/key-value-data.dto';

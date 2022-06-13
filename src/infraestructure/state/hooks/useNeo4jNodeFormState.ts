@@ -5,7 +5,7 @@ import { NodeProperties, setNode, setNodeLabels, setNodeName, addNodeProperties,
 export function useNeo4jNodeFormState() {
     
     const dispatch = useDispatch()
-    const { node, nodeName, nodeLabels, properties } = useSelector((state: RootState) => state.neo4jForm)
+    const { node, nodeName, nodeLabels, properties } = useSelector((state: RootState) => state.neo4jNodeForm)
 
     return {
         node,

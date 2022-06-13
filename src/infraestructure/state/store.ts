@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import neo4jNodeForm from './ducks/neo4j-node-form.duck';
+import neo4jRelationshipForm from './ducks/neo4j-relationship-form.duck';
 import uiReducer from './ducks/ui.duck';
 
 export const store = configureStore({
   reducer: {
       ui: uiReducer,
-      neo4jForm: neo4jNodeForm
+      neo4jNodeForm: neo4jNodeForm,
+      neo4jRelationshipForm: neo4jRelationshipForm
   },
 })
 
