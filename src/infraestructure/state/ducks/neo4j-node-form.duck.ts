@@ -5,22 +5,22 @@ export interface NodeProperties {
   value: string;
 }
 
-export interface Neo4jFormState {
+export interface Neo4jNodeFormState {
   node: string;
   nodeName: string;
   nodeLabels: string[];
   properties: NodeProperties[];
 }
 
-const initialState: Neo4jFormState = {
+const initialState: Neo4jNodeFormState = {
     node: '',
     nodeName: '',
     nodeLabels: [],
     properties: []
 }
 
-export const neo4jForm = createSlice({
-  name: 'neo4jForm',
+export const neo4jNodeForm = createSlice({
+  name: 'neo4jNodeForm',
   initialState,
   reducers: {
     setNode:(state, action: PayloadAction<string>) => {
@@ -46,6 +46,6 @@ export const neo4jForm = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setNodeName, setNodeLabels, setNode, addNodeProperties, resetNodeProperties } = neo4jForm.actions
+export const { setNodeName, setNodeLabels, setNode, addNodeProperties, resetNodeProperties } = neo4jNodeForm.actions
 
-export default neo4jForm.reducer
+export default neo4jNodeForm.reducer

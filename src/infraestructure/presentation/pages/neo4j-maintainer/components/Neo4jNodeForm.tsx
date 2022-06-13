@@ -5,7 +5,7 @@ import SelectNodeInput from './SelectNodeInput';
 import NameEntityInput from './NameEntityInput';
 import SelectLabelInput from './SelectLabelInput';
 import SaveAndCancelButtons from '../../../shared/components/SaveAndCancelButtons';
-import { useNeo4jFormState } from '../../../../state/hooks/useNeo4jFormState';
+import { useNeo4jNodeFormState } from '../../../../state/hooks/useNeo4jFormState';
 import { KeyValueInput } from '../../../shared/components/KeyValueInput';
 import KeyValuePreview from '../../../shared/components/KeyValuePreview';
 import { KeyValueData } from '../dto/key-value-data.dto';
@@ -14,7 +14,7 @@ import swal from 'sweetalert';
 
 export default function Neo4jNodeForm() {
 
-  const { node, nodeName, nodeLabels, nodeProperties, setNode, setNodeName, setNodeLabels, addNodeProperties, resetNodeProperties } = useNeo4jFormState()
+  const { node, nodeName, nodeLabels, nodeProperties, setNode, setNodeName, setNodeLabels, addNodeProperties, resetNodeProperties } = useNeo4jNodeFormState()
   const [formValid, setFormValid] = useState(false)
 
   const handleOnNameChange = (name: string) => {

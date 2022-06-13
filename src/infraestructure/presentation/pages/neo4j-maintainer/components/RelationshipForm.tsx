@@ -5,10 +5,9 @@ import { Grid, Typography } from '@mui/material';
 import SelectEntityInput from './SelectEntityInput';
 import NewRelationshipInput from './NewRelationshipInput';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import { getSelectNodeNames } from '../../../../../core/application/service/getSelectNodeNames';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { useNodeNames } from '../hooks/useNodeNames';
 
-const nodeOptions = getSelectNodeNames()
 
 const handleOnChangePrimaryNode = (e: any) => {
 
@@ -19,6 +18,11 @@ const handleOnChangeSecondaryNode = (e: any) => {
 }
 
 export function RelationshipForm() {
+
+    const { names } = useNodeNames()
+    const uniquenames = [...new Set(names)]
+    const nodeOptions = uniquenames.map(n => ({ id: n, name: n}))
+    
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
