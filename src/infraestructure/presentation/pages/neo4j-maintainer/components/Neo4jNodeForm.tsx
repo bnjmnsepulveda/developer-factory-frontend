@@ -39,6 +39,7 @@ export default function Neo4jNodeForm() {
         labels: nodeLabels,
       })
         .then(() => swal(`Información`, `Nodo Neo4j ${nodeName} Guardado!`, "success"))
+        .catch(e => swal(`Error`, `Nodo Neo4j ${nodeName} no pudo ser guardado ${e.message}`, "error"))
         .finally(() => handleOnCancel())
 
     }

@@ -1,13 +1,25 @@
 import { AxiosInstance } from "axios";
 import { CreateNeo4jNodeRequest } from "../../core/application/adapter/CreateNeo4jNodeRequest";
+import { CreateNeo4jRelationshipRequest } from "../../core/application/adapter/CreateNeo4jRelationshipRequest";
 import { GetNodeLabelsRequest } from "../../core/application/adapter/GetNodeLabelsRequest";
 import { GetNodeNamesRequest } from "../../core/application/adapter/GetNodeNamesRequest";
 import { CreateNeo4jNodeDTO } from "../../core/application/dto/CreateNeo4jNodeDTO";
+import { CreateNeo4jRelationshipDTO } from "../../core/application/dto/CreateNeo4jRelationshipDTO";
 import AxiosClient from "./AxiosClient";
 
-class Neo4jMaintainerApi implements CreateNeo4jNodeRequest, GetNodeLabelsRequest, GetNodeNamesRequest {
+class Neo4jMaintainerApi implements CreateNeo4jNodeRequest, GetNodeLabelsRequest, GetNodeNamesRequest, CreateNeo4jRelationshipRequest {
 
     constructor(private axios: AxiosInstance) { }
+
+    createRelationship(relationship: CreateNeo4jRelationshipDTO): Promise<any> {
+        return this.axios
+            .post('/neo4j/relationship', {
+                name: relationship.name,
+                node_a: relationship.nodeA,
+                node_b: relationship.nodeB
+            })
+            .then(response => response.data);
+    }
 
     getNodeNames(): Promise<string[]> {
         return this.axios

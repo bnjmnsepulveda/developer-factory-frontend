@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import SaveAndCancelButtons from '../../../shared/components/SaveAndCancelButtons';
 import { Grid } from '@mui/material';
+import swal from 'sweetalert';
 import SelectEntityInput from './SelectEntityInput';
 import NewRelationshipInput from './NewRelationshipInput';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useNodeNames } from '../hooks/useNodeNames';
 import { useNeo4jRelationshipFormState } from '../../../../state/hooks/useNeo4jRelationshipFormState';
+import createNeo4jRelationship from '../../../../../core/application/service/createNeo4jRelationship';
 
 export function RelationshipForm() {
 
@@ -27,8 +29,17 @@ export function RelationshipForm() {
 
     const handleOnChangeName = (value: string) => setName(value)
 
-    const handleOnSave = () => {
-
+    const handleOnSave = async () => {
+        if (formValid) {
+            await createNeo4jRelationship({
+                name,
+                nodeA,
+                nodeB
+            })
+            .then(() => swal(`Información`, `Relación Neo4j ${name} Guardada!`, "success"))
+            .catch(e => swal(`Error`, `Relación Neo4j ${name} no pudo ser guardada ${e.message}`, "error"))
+            .finally(() => handleOnCancel())
+        }
     }
 
     const handleOnCancel = () => {
