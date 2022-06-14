@@ -1,74 +1,34 @@
-
-import React, { useState } from 'react';
-import { Button, FormControl, Grid, TextField } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import * as React from 'react';
+import { Grid } from '@mui/material';
 import { KeyValueData } from '../../pages/neo4j-maintainer/dto/key-value-data.dto';
+import { CustomInputProps } from '../utils/CustomInputProps';
+import KeyValuePreview from './KeyValuePreview';
+import { KeyValueSelector } from './KeyValueSelector';
 
-interface Props {
-    onAddKeyValue: (value: KeyValueData) => void;
-}
+interface Props extends CustomInputProps<KeyValueData[]> { }
 
-const defaultState = {
-    key: '', 
-    value: '' 
-}
+export default function KeyValueInput({ value, onChange }: Props) {
 
-export function KeyValueInput({ onAddKeyValue }: Props) {
-
-    const [ state, setState] = useState<KeyValueData>(defaultState)
-    const [buttonDisabled, setButtonDisabled] = useState(true)
-
-    const handleOnAdd = (e: any) => {
-        onAddKeyValue(state)
-        setState(defaultState)
-        setButtonDisabled(true)
-    }
-
-    const enableButtonAdd = (key: any, value: any) => {
-        setButtonDisabled((key === '' || value === ''))
-    }
-
-    const handleOnChangeKey = (e: any) => {
-        setState({...state, key: e.target.value})
-        enableButtonAdd(e.target.value, state.value)
-    }
-
-    const handleOnChangeValue = (e: any) => {
-        setState({...state, value: e.target.value})
-        enableButtonAdd(state.key, e.target.value)
+    const handleOnKeyValueAdded = (keyValueData: KeyValueData) => {
+        const sanitized: KeyValueData = {
+            ...keyValueData,
+            key: keyValueData.key.replaceAll(' ', '_')
+        }
+        onChange([
+            ...value,
+            sanitized
+        ])
     }
 
     return (
-        <Grid container spacing={2} alignItems="center" justifyContent="center">
-            <Grid item xs={4}>
-                <FormControl fullWidth>
-                    <TextField
-                        id="key-input"
-                        label="Llave"
-                        value={state.key}
-                        onChange={handleOnChangeKey}
-                        placeholder="Ingrese la llave"
-                    />
-                </FormControl>
+        <Grid container spacing={2}>
+            <Grid item xs={12}>
+                <KeyValueSelector onAddKeyValue={handleOnKeyValueAdded} />
             </Grid>
-            <Grid item xs={4}>
-                <FormControl fullWidth>
-                    <TextField
-                        id="value-input"
-                        label="Valor"
-                        value={state.value}
-                        onChange={handleOnChangeValue}
-                        placeholder="Ingrese el valor"
-                    />
-                </FormControl>
-            </Grid>
-            <Grid item xs={4} >
-                <FormControl fullWidth>
-                    <Button onClick={handleOnAdd} disabled={buttonDisabled} variant="contained" color="secondary" startIcon={<AddIcon />}  >
-                        Agregar
-                    </Button>
-                </FormControl>
+            <Grid item xs={12} >
+                <KeyValuePreview keyValueData={value} />
             </Grid>
         </Grid>
+
     )
 }

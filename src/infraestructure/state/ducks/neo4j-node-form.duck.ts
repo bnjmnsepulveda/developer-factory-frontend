@@ -32,6 +32,9 @@ export const neo4jNodeForm = createSlice({
     setNodeLabels: (state, action: PayloadAction<string[]>) => {
       state.nodeLabels = action.payload
     },
+    setProperties: (state, action: PayloadAction<NodeProperties[]>) => {
+      state.properties = action.payload
+    },
     addNodeProperties: (state, action: PayloadAction<NodeProperties>) => {
       const properties = state.properties.filter(p => p.key !== action.payload.key)
       state.properties = [
@@ -46,6 +49,6 @@ export const neo4jNodeForm = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { setNodeName, setNodeLabels, setNode, addNodeProperties, resetNodeProperties } = neo4jNodeForm.actions
+export const { setNodeName, setNodeLabels, setNode, addNodeProperties, resetNodeProperties, setProperties } = neo4jNodeForm.actions
 
 export default neo4jNodeForm.reducer
