@@ -9,10 +9,16 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useNodeNames } from '../hooks/useNodeNames';
 import { useNeo4jRelationshipFormState } from '../../../../state/hooks/useNeo4jRelationshipFormState';
 import createNeo4jRelationship from '../../../../../core/application/service/createNeo4jRelationship';
+import KeyValueInput from '../../../shared/components/KeyValueInput';
+import { KeyValueData } from '../dto/key-value-data.dto';
+import { CreateNeo4jRelationshipDTO } from '../../../../../core/application/dto/CreateNeo4jRelationshipDTO';
 
 export function RelationshipForm() {
 
-    const { name, nodeA, nodeB, setName, setNodeA, setNodeB } = useNeo4jRelationshipFormState()
+    const {
+        name, nodeA, nodeB, properties,
+        setName, setNodeA, setNodeB, setProperties
+    } = useNeo4jRelationshipFormState()
     const { names } = useNodeNames()
     const [formValid, setFormValid] = useState(false)
 
@@ -29,16 +35,29 @@ export function RelationshipForm() {
 
     const handleOnChangeName = (value: string) => setName(value)
 
+    const handleOnKeyValueChange = (keyValueData: KeyValueData[]) => setProperties(keyValueData)
+
     const handleOnSave = async () => {
         if (formValid) {
-            await createNeo4jRelationship({
+            let neo4jRelatonship: CreateNeo4jRelationshipDTO = {
                 name,
                 nodeA,
                 nodeB
-            })
-            .then(() => swal(`Información`, `Relación Neo4j ${name} Guardada!`, "success"))
-            .catch(e => swal(`Error`, `Relación Neo4j ${name} no pudo ser guardada ${e.message}`, "error"))
-            .finally(() => handleOnCancel())
+            }
+            if (properties && properties.length > 0) {
+                const props: Record<string, any> = {}
+                for(let np of properties) {
+                    props[np.key] = np.value
+                }
+                neo4jRelatonship = {
+                    ...neo4jRelatonship,
+                    properties: props
+                }
+            }
+            await createNeo4jRelationship(neo4jRelatonship)
+                .then(() => swal(`Información`, `Relación Neo4j ${name} Guardada!`, "success"))
+                .catch(e => swal(`Error`, `Relación Neo4j ${name} no pudo ser guardada ${e.message}`, "error"))
+                .finally(() => handleOnCancel())
         }
     }
 
@@ -46,7 +65,9 @@ export function RelationshipForm() {
         setName('')
         setNodeA('')
         setNodeB('')
+        setProperties([])
     }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <Grid container spacing={2}>
@@ -63,6 +84,9 @@ export function RelationshipForm() {
                 </Grid>
                 <Grid item xs={10}>
                     <NewRelationshipInput value={name} onChange={handleOnChangeName} />
+                </Grid>
+                <Grid item xs={12}>
+                    <KeyValueInput value={properties} onChange={handleOnKeyValueChange} />
                 </Grid>
                 <Grid item xs={10}>
                     <SaveAndCancelButtons disabled={!formValid} onCancel={handleOnCancel} onSave={handleOnSave} />

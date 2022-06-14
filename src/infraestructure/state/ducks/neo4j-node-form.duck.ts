@@ -1,9 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { NodeProperties } from '../shared/node-properties.state';
 
-export interface NodeProperties {
-  key: string;
-  value: string;
-}
 
 export interface Neo4jNodeFormState {
   node: string;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import PersistentDrawer from './infraestructure/presentation/shared/components/PersistentDrawer';
 import { Provider } from 'react-redux'

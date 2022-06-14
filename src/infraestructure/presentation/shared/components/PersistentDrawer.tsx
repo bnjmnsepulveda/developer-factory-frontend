@@ -81,7 +81,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function PersistentDrawer() {
 
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
   const [content, setContent] = React.useState('create-node');
   const { dashboardTitle, setDashboardTitle } = useUiState()
 
