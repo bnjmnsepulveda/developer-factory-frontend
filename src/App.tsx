@@ -1,15 +1,23 @@
 import React from 'react';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import './App.css';
 import PersistentDrawer from './infraestructure/presentation/shared/components/PersistentDrawer';
 import { Provider } from 'react-redux'
 import { store } from './infraestructure/state/store';
 
-function App() {
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
+function App() {
   return (
-    <Provider store={store}>
-      <PersistentDrawer />
-    </Provider>
+    <ThemeProvider theme={darkTheme}>
+      <Provider store={store}>
+        <PersistentDrawer />
+      </Provider>
+    </ThemeProvider>
   );
 }
 

@@ -12,11 +12,13 @@ class Neo4jMaintainerApi implements CreateNeo4jNodeRequest, GetNodeLabelsRequest
     constructor(private axios: AxiosInstance) { }
 
     createRelationship(relationship: CreateNeo4jRelationshipDTO): Promise<any> {
+        
         return this.axios
             .post('/neo4j/relationship', {
                 name: relationship.name,
                 node_a: relationship.nodeA,
-                node_b: relationship.nodeB
+                node_b: relationship.nodeB,
+                properties: relationship.properties
             })
             .then(response => response.data);
     }
