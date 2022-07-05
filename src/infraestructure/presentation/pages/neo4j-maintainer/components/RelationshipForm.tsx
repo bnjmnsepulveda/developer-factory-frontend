@@ -57,7 +57,7 @@ export function RelationshipForm() {
             await createNeo4jRelationship(neo4jRelatonship)
                 .then(() => swal(`Información`, `Relación Neo4j ${name} Guardada!`, "success"))
                 .catch(e => swal(`Error`, `Relación Neo4j ${name} no pudo ser guardada ${e.message}`, "error"))
-                .finally(() => handleOnCancel())
+                // .finally(() => handleOnCancel())
         }
     }
 
